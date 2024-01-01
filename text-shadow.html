@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Text Shadow - CSS Magic</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include Prism for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
+    <!-- Include Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./favic/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favic/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favic/favicon-16x16.png">
+    <link rel="manifest" href="./favic/site.webmanifest">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 text-center">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="./index.html">
+                <h1 class="text-3xl md:text-4xl ml-4 lg:text-5xl font-semibold">CSS Magic</h1>
+            </a>
+            <!-- Hamburger Icon for Mobile -->
+            <div class="md:hidden">
+                <button id="mobile-menu-toggle" class="mr-4 text-white focus:outline-none">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                        <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navbar Links (Hidden on Mobile) -->
+            <ul class="hidden md:flex justify-center space-x-4 md:space-x-8">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="md:hidden mt-3" id="mobile-menu">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="text-shadow-generator-preview"
+        class="container mx-auto my-8 px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row">
+
+        <div class="w-full md:w-1/2 max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Text Shadow Generator</h2>
+
+            <!-- Text Shadow Controls -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Horizontal Offset:</label>
+                <input type="range" id="horizontal-offset-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="-50" max="50" />
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Vertical Offset:</label>
+                <input type="range" id="vertical-offset-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="-50" max="50" />
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Blur Radius:</label>
+                <input type="range" id="blur-radius-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="50" />
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Shadow Color:</label>
+                <input type="color" id="shadow-color-preview"
+                    class="w-full h-10 rounded-md outline-none focus:ring focus:ring-blue-400" />
+            </div>
+
+            <div class="mb-4 relative">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Generated Text Shadow CSS:</label>
+                <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto mb-0" style="margin-bottom: 0;">
+                    <code class="language-css" id="generated-text-shadow-code">
+                        <!-- CSS code goes here -->
+                    </code>
+                </pre>
+                <button id="copyButton"
+                    class="absolute top-2 right-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300">Copy</button>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 p-4 flex items-center justify-center">
+            <!-- Text Shadow Sample -->
+            <div class="text-shadow-sample text-gray-500 text-4xl font-bold" id="text-shadow-sample">Your Text Here
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Getting Started with Text Shadow</h2>
+            <p class="text-gray-700 mb-4">Text shadow is a CSS property that adds a shadow effect to text. It can be
+                used to enhance the visibility and style of text on your website.</p>
+
+            <p class="text-gray-700 mb-4">To use text shadow, you can apply the following CSS style:</p>
+
+            <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto pl-0">
+                <code class="language-css">
+                    .text-element {
+                      text-shadow: 2px 2px 4px #000000;
+                    }
+                </code>
+            </pre>
+
+            <p class="text-gray-700 mb-4">In the above example, the `text-shadow` property is used with values for the
+                horizontal offset, vertical offset, blur radius, and color of the shadow.</p>
+
+            <p class="text-gray-700 mb-4">Feel free to experiment with different values to achieve the desired text
+                shadow effect for your text elements.</p>
+
+            <a href="./index.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to
+                Home</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-4 text-center">
+        <p>&copy; 2023 CSS Magic. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function generateTextShadow() {
+            const horizontalOffset = document.getElementById('horizontal-offset-preview').value + 'px';
+            const verticalOffset = document.getElementById('vertical-offset-preview').value + 'px';
+            const blurRadius = document.getElementById('blur-radius-preview').value + 'px';
+            const shadowColor = document.getElementById('shadow-color-preview').value;
+
+            const textShadowValue = `${horizontalOffset} ${verticalOffset} ${blurRadius} ${shadowColor}`;
+            const textShadowSample = document.getElementById('text-shadow-sample');
+            const codeSnippet = document.getElementById('generated-text-shadow-code');
+
+            textShadowSample.style.textShadow = textShadowValue;
+            codeSnippet.textContent = `text-shadow: ${textShadowValue};`;
+        }
+
+        function copyToClipboard() {
+            const codeSnippet = document.getElementById('generated-text-shadow-code').textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeSnippet;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        document.getElementById('horizontal-offset-preview').addEventListener('input', generateTextShadow);
+        document.getElementById('vertical-offset-preview').addEventListener('input', generateTextShadow);
+        document.getElementById('blur-radius-preview').addEventListener('input', generateTextShadow);
+        document.getElementById('shadow-color-preview').addEventListener('input', generateTextShadow);
+
+        document.getElementById('copyButton').addEventListener('click', copyToClipboard);
+
+        generateTextShadow();
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js"></script>
+    <script>
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Set initial state of the mobile menu to hidden
+        mobileMenu.classList.add('hidden');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>

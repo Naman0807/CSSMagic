@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gradient Generator - CSS Magic</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include Prism for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
+    <!-- Include Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./favic/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favic/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favic/favicon-16x16.png">
+    <link rel="manifest" href="./favic/site.webmanifest">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 text-center">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="./index.html">
+                <h1 class="text-3xl md:text-4xl ml-4 lg:text-5xl font-semibold">CSS Magic</h1>
+            </a>
+            <!-- Hamburger Icon for Mobile -->
+            <div class="md:hidden">
+                <button id="mobile-menu-toggle" class="mr-4 text-white focus:outline-none">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                        <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navbar Links (Hidden on Mobile) -->
+            <ul class="hidden md:flex justify-center space-x-4 md:space-x-8">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="md:hidden mt-3" id="mobile-menu">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="gradient-generator-preview"
+        class="container mx-auto my-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center">
+        <!-- Generator Controls -->
+        <div class="w-full md:w-1/2 max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-indigo-600">Gradient Generator</h2>
+
+            <!-- Gradient Type Selector -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Gradient Type:</label>
+                <select id="gradient-type" class="w-full bg-gray-300 text-gray-700 p-2 rounded">
+                    <option value="linear">Linear Gradient</option>
+                    <option value="radial">Radial Gradient</option>
+                </select>
+            </div>
+
+            <!-- Color Stops -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Color Stops:</label>
+                <div id="color-stops-container">
+                    <!-- Color Stops will be dynamically added here -->
+                </div>
+                <button id="add-color-stop"
+                    class="mt-2 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 focus:outline-none focus:ring focus:border-indigo-300">Add
+                    Color Stop</button>
+            </div>
+
+            <!-- Angle for Linear Gradient -->
+            <div id="angle-control" class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Angle (Linear Gradient):</label>
+                <input type="range" id="gradient-angle"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="360" />
+            </div>
+
+            <hr style="padding-bottom: 30px;">
+            <div class="mb-4 relative">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Generated Gradient CSS:</label>
+                <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto mb-0" style="margin-bottom: 0;">
+                <code class="language-css" id="generated-gradient-code">
+                    <!-- CSS code goes here -->
+                </code>
+            </pre>
+                <button id="copyGradientButton"
+                    class="absolute top-2 right-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 focus:outline-none focus:ring focus:border-indigo-300">Copy</button>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 p-4 flex items-center justify-center" id="gradient-preview">
+            <div class="gradient-sample w-full h-40 bg-gradient-to-r from-indigo-600 to-purple-600"
+                id="gradient-sample">
+            </div>
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    <section class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-indigo-600">Getting Started with Gradients</h2>
+            <p class="text-gray-700 mb-4">Gradients in CSS allow you to create smooth transitions between two or more
+                colors. They are a great way to add depth and style to your website's design.</p>
+
+            <p class="text-gray-700 mb-4">To use gradients, you can apply the following CSS style:</p>
+
+            <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto">
+            <code class="language-css">
+                .gradient-element {
+                  background: linear-gradient(to right, #4FACFE, #00F2FE); /* Adjust the colors and direction as needed */
+                }
+            </code>
+        </pre>
+
+            <p class="text-gray-700 mb-4">In the above example, the `linear-gradient` function is used to create a
+                linear
+                gradient background from left to right. You can customize the colors and direction to achieve the
+                desired
+                gradient effect for your elements.</p>
+
+            <a href="./index.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Back
+                to
+                Home</a>
+        </div>
+    </section>
+
+    <!-- Add other sections and content as needed -->
+
+    <footer class="bg-gray-800 text-white py-4 text-center">
+        <p>&copy; 2023 CSS Magic. All rights reserved.</p>
+    </footer>
+
+    <!-- Add scripts and additional functionality as needed -->
+    <script>
+        function generateGradient() {
+            const gradientType = document.getElementById('gradient-type').value;
+            const colorStops = document.querySelectorAll('.color-stop');
+            const angle = document.getElementById('gradient-angle').value;
+
+            let gradientValue;
+
+            if (gradientType === 'linear') {
+                gradientValue = `linear-gradient(${angle}deg, ${Array.from(colorStops).map(stop => stop.value).join(', ')})`;
+            } else {
+                gradientValue = `radial-gradient(${Array.from(colorStops).map(stop => stop.value).join(', ')})`;
+            }
+
+            const gradientSample = document.getElementById('gradient-sample');
+            gradientSample.style.background = gradientValue;
+
+            const codeSnippet = document.getElementById('generated-gradient-code');
+            codeSnippet.textContent = `background: ${gradientValue};
+    `;
+        }
+
+        function addColorStop() {
+            const colorStopsContainer = document.getElementById('color-stops-container');
+            const colorStopInput = document.createElement('input');
+            colorStopInput.type = 'color';
+            colorStopInput.value = '#000000'; // Default color
+            colorStopInput.classList.add('color-stop', 'mr-2', 'mb-2');
+
+            colorStopInput.addEventListener('input', generateGradient);
+
+            colorStopsContainer.appendChild(colorStopInput);
+            generateGradient(); // Update gradient on color stop addition
+        }
+
+        document.getElementById('add-color-stop').addEventListener('click', addColorStop);
+        document.getElementById('gradient-type').addEventListener('change', generateGradient);
+        document.getElementById('gradient-angle').addEventListener('input', generateGradient);
+
+        addColorStop(); // Initial color stop
+
+        // Copy to clipboard functionality
+        new ClipboardJS('#copyGradientButton', {
+            text: function () {
+                return document.getElementById('generated-gradient-code').textContent;
+            }
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js"></script>
+    <script>
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Set initial state of the mobile menu to hidden
+        mobileMenu.classList.add('hidden');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>

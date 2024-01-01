@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Border Radius Generator - CSS Magic</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include Prism for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet" />
+    <!-- Include Clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./favic/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favic/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favic/favicon-16x16.png">
+    <link rel="manifest" href="./favic/site.webmanifest">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 text-center">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo or Site Title (Adjust as needed) -->
+            <a href="./index.html">
+                <h1 class="text-3xl md:text-4xl ml-4 lg:text-5xl font-semibold">CSS Magic</h1>
+            </a>
+
+            <!-- Hamburger Icon for Mobile -->
+            <div class="md:hidden">
+                <button id="mobile-menu-toggle" class="mr-4 text-white focus:outline-none">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                        <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navbar Links (Hidden on Mobile) -->
+            <ul class="hidden md:flex justify-center space-x-4 md:space-x-8">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="md:hidden mt-3" id="mobile-menu">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="./index.html" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="./box-shadow.html" class="text-white hover:text-gray-300">Box Shadow</a></li>
+                <li><a href="./text-shadow.html" class="text-white hover:text-gray-300">Text Shadow</a></li>
+                <li><a href="./border.html" class="text-white hover:text-gray-300">Border</a></li>
+                <li><a href="./gradient-color.html" class="text-white hover:text-gray-300">Gradient Color</a></li>
+                <li><a href="./border-radius.html" class="text-white hover:text-gray-300">Border Radius</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="border-radius-generator-preview"
+        class="container mx-auto my-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center">
+
+        <div class="w-full md:w-1/2 max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Border Radius Generator</h2>
+
+            <!-- Toggle for Individual Border Radius -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Apply to:</label>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm">All Corners</span>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="individual-radius-toggle"
+                            class="form-checkbox h-5 w-5 text-blue-600" />
+                        <span class="ml-2">Individual Corners</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Border Radius Controls -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Border Radius:</label>
+                <input type="range" id="border-radius-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="100" />
+            </div>
+
+            <!-- Individual Border Radius Controls (Initially Hidden) -->
+            <div id="individual-border-radius" class="hidden">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Top Left Radius:</label>
+                    <input type="range" id="top-left-radius-preview"
+                        class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="100" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Top Right Radius:</label>
+                    <input type="range" id="top-right-radius-preview"
+                        class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="100" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Bottom Right Radius:</label>
+                    <input type="range" id="bottom-right-radius-preview"
+                        class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="100" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Bottom Left Radius:</label>
+                    <input type="range" id="bottom-left-radius-preview"
+                        class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="100" />
+                </div>
+            </div>
+
+            <hr style="padding-bottom: 30px;">
+            <div class="mb-4 relative">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Generated Border Radius CSS:</label>
+                <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto mb-0" style="margin-bottom: 0;">
+                <code class="language-css" id="generated-border-radius-code">
+                    <!-- CSS code goes here -->
+                </code>
+            </pre>
+                <button id="copyButton"
+                    class="absolute top-2 right-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300">Copy</button>
+            </div>
+        </div>
+        <!-- Rectangle with Border Radius on the left -->
+        <div class="w-full md:w-1/2 p-4 flex items-center justify-center" id="border-radius-rectangle">
+            <div class="border-radius-sample m-auto w-40 h-40 bg-blue-600 relative" id="border-radius-sample"></div>
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    <section class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Getting Started with Border Radius</h2>
+            <p class="text-gray-700 mb-4">Border-radius in CSS is used to create rounded corners for elements. It adds a
+                decorative touch and softens the appearance of your website's layout.</p>
+
+            <p class="text-gray-700 mb-4">To use border-radius, you can apply the following CSS style:</p>
+
+            <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto">
+            <code class="language-css">
+                .border-radius-element {
+                  border-radius: 10px; /* Adjust the value as needed */
+                }
+            </code>
+        </pre>
+
+            <p class="text-gray-700 mb-4">In the above example, the `border-radius` property is used with a value to
+                define the radius of the corners. Experiment with different values to achieve the desired rounded corner
+                effect for your elements.</p>
+
+            <a href="./index.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to
+                Home</a>
+        </div>
+    </section>
+
+    <!-- Add other sections and content as needed -->
+
+    <footer class="bg-gray-800 text-white py-4 text-center">
+        <p>&copy; 2023 CSS Magic. All rights reserved.</p>
+    </footer>
+
+    <!-- Add scripts and additional functionality as needed -->
+    <script>
+        function generateBorderRadius() {
+            const isIndividual = document.getElementById('individual-radius-toggle').checked;
+
+            let borderRadiusValue;
+
+            if (isIndividual) {
+                const topLeftRadius = document.getElementById('top-left-radius-preview').value + 'px';
+                const topRightRadius = document.getElementById('top-right-radius-preview').value + 'px';
+                const bottomRightRadius = document.getElementById('bottom-right-radius-preview').value + 'px';
+                const bottomLeftRadius = document.getElementById('bottom-left-radius-preview').value + 'px';
+
+                borderRadiusValue = `${topLeftRadius} ${topRightRadius} ${bottomRightRadius} ${bottomLeftRadius}`;
+
+                // Apply individual border-radius styles to the rectangle
+                const individualBorderRadiusSample = document.getElementById('border-radius-sample');
+                individualBorderRadiusSample.style.borderTopLeftRadius = topLeftRadius;
+                individualBorderRadiusSample.style.borderTopRightRadius = topRightRadius;
+                individualBorderRadiusSample.style.borderBottomRightRadius = bottomRightRadius;
+                individualBorderRadiusSample.style.borderBottomLeftRadius = bottomLeftRadius;
+
+                // Show the individual border-radius controls
+                document.getElementById('individual-border-radius').style.display = 'block';
+            } else {
+                const borderRadius = document.getElementById('border-radius-preview').value + 'px';
+                borderRadiusValue = borderRadius;
+
+                // Apply border-radius style to the rectangle
+                const borderRadiusSample = document.getElementById('border-radius-sample');
+                borderRadiusSample.style.borderRadius = borderRadius;
+
+                // Hide the individual border-radius controls
+                document.getElementById('individual-border-radius').style.display = 'none';
+            }
+
+            const codeSnippet = document.getElementById('generated-border-radius-code');
+            codeSnippet.textContent = `border-radius: ${borderRadiusValue};`;
+        }
+
+        function toggleIndividualRadius() {
+            const individualBorderRadius = document.getElementById('individual-border-radius');
+            const isIndividual = document.getElementById('individual-radius-toggle').checked;
+
+            individualBorderRadius.style.display = isIndividual ? 'block' : 'none';
+            generateBorderRadius();
+        }
+
+        function setupIndividualRadiusListeners() {
+            document.getElementById('top-left-radius-preview').addEventListener('input', generateBorderRadius);
+            document.getElementById('top-right-radius-preview').addEventListener('input', generateBorderRadius);
+            document.getElementById('bottom-right-radius-preview').addEventListener('input', generateBorderRadius);
+            document.getElementById('bottom-left-radius-preview').addEventListener('input', generateBorderRadius);
+        }
+
+        document.getElementById('individual-radius-toggle').addEventListener('change', function () {
+            toggleIndividualRadius();
+            if (this.checked) {
+                setupIndividualRadiusListeners();
+            }
+        });
+
+        document.getElementById('border-radius-preview').addEventListener('input', generateBorderRadius);
+
+        toggleIndividualRadius(); // Initialize based on the default state
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-css.min.js"></script>
+    <script>
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Set initial state of the mobile menu to hidden
+        mobileMenu.classList.add('hidden');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>
