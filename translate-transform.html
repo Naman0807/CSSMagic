@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Text Shadow - CSS Magic</title>
+    <title>Transform and Translate - CSS Magic</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Include Prism for syntax highlighting -->
@@ -62,41 +62,40 @@
         </div>
     </header>
 
-    <section id="text-shadow-generator-preview"
+    <section id="translate-transform-generator-preview"
         class="container mx-auto my-8 px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row">
-
         <div class="w-full md:w-1/2 max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
-            <h2 class="text-2xl font-bold mb-4 text-blue-600">Text Shadow Generator</h2>
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Transform and Translate Generator</h2>
 
-            <!-- Text Shadow Controls -->
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Horizontal Offset:</label>
-                <input type="range" id="horizontal-offset-preview"
+                <label class="block text-gray-700 text-sm font-bold mb-2">Translate X:</label>
+                <input type="range" id="translate-x-preview"
                     class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="-50" max="50" />
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Vertical Offset:</label>
-                <input type="range" id="vertical-offset-preview"
+                <label class="block text-gray-700 text-sm font-bold mb-2">Translate Y:</label>
+                <input type="range" id="translate-y-preview"
                     class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="-50" max="50" />
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Blur Radius:</label>
-                <input type="range" id="blur-radius-preview"
-                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="50" />
+                <label class="block text-gray-700 text-sm font-bold mb-2">Rotate:</label>
+                <input type="range" id="rotate-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0" max="360" />
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Shadow Color:</label>
-                <input type="color" id="shadow-color-preview"
-                    class="w-full h-10 rounded-md outline-none focus:ring focus:ring-blue-400" />
+                <label class="block text-gray-700 text-sm font-bold mb-2">Scale:</label>
+                <input type="range" id="scale-preview"
+                    class="w-full appearance-none bg-gray-300 h-2 rounded-full outline-none" min="0.1" max="2"
+                    step="0.1" />
             </div>
 
             <div class="mb-4 relative">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Generated Text Shadow CSS:</label>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Generated Transform CSS:</label>
                 <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto mb-0" style="margin-bottom: 0;">
-                    <code class="language-css" id="generated-text-shadow-code">
+                    <code class="language-css" id="generated-transform-code">
                         <!-- CSS code goes here -->
                     </code>
                 </pre>
@@ -105,33 +104,36 @@
             </div>
         </div>
         <div class="w-full md:w-1/2 p-4 flex items-center justify-center">
-            <!-- Text Shadow Sample -->
-            <div class="text-shadow-sample text-gray-500 text-4xl font-bold" id="text-shadow-sample">Your Text Here
+            <div class="translate-transform-sample rounded-lg border border-gray-300 overflow-hidden relative"
+                id="translate-transform-sample" style="width: 400px; height: 300px;">
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-red-500 opacity-50"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <p class="text-white text-lg font-bold">Your Transformed Content</p>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto bg-white rounded p-8 shadow-lg">
-            <h2 class="text-2xl font-bold mb-4 text-blue-600">Getting Started with Text Shadow</h2>
-            <p class="text-gray-700 mb-4">Text shadow is a CSS property that adds a shadow effect to text. It can be
-                used to enhance the visibility and style of text on your website.</p>
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Getting Started with Transform and Translate</h2>
+            <p class="text-gray-700 mb-4">CSS transforms allow you to manipulate elements in 2D and 3D space.
+                Translations (moves), rotations, scaling, and skewing can be applied to elements using the `transform`
+                property.</p>
 
-            <p class="text-gray-700 mb-4">To use text shadow, you can apply the following CSS style:</p>
+            <p class="text-gray-700 mb-4">To use transform and translate, you can apply the following CSS style:</p>
 
-            <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto pl-0">
+            <pre class="bg-gray-100 p-4 rounded-md overflow-x-auto">
                 <code class="language-css">
-                    .text-element {
-                      text-shadow: 2px 2px 4px #000000;
+                    .element {
+                      transform: translateX(20px) translateY(-10px) rotate(30deg) scale(1.2);
                     }
                 </code>
             </pre>
 
-            <p class="text-gray-700 mb-4">In the above example, the `text-shadow` property is used with values for the
-                horizontal offset, vertical offset, blur radius, and color of the shadow.</p>
-
-            <p class="text-gray-700 mb-4">Feel free to experiment with different values to achieve the desired text
-                shadow effect for your text elements.</p>
+            <p class="text-gray-700 mb-4">In the above example, the `transform` property is used with values for
+                translation in the X and Y directions, rotation, and scaling. Feel free to experiment with different
+                values to achieve the desired transformation effect for your elements.</p>
 
             <a href="./index.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to
                 Home</a>
@@ -143,38 +145,30 @@
     </footer>
 
     <script>
-        function generateTextShadow() {
-            const horizontalOffset = document.getElementById('horizontal-offset-preview').value + 'px';
-            const verticalOffset = document.getElementById('vertical-offset-preview').value + 'px';
-            const blurRadius = document.getElementById('blur-radius-preview').value + 'px';
-            const shadowColor = document.getElementById('shadow-color-preview').value;
+        function generateTransform() {
+            const translateX = document.getElementById('translate-x-preview').value + 'px';
+            const translateY = document.getElementById('translate-y-preview').value + 'px';
+            const rotate = document.getElementById('rotate-preview').value + 'deg';
+            const scale = document.getElementById('scale-preview').value;
 
-            const textShadowValue = `${horizontalOffset} ${verticalOffset} ${blurRadius} ${shadowColor}`;
-            const textShadowSample = document.getElementById('text-shadow-sample');
-            const codeSnippet = document.getElementById('generated-text-shadow-code');
+            const transformValue = `translateX(${translateX}) translateY(${translateY}) rotate(${rotate}) scale(${scale})`;
+            const sampleDiv = document.getElementById('translate-transform-sample');
+            const codeSnippet = document.getElementById('generated-transform-code');
 
-            textShadowSample.style.textShadow = textShadowValue;
-            codeSnippet.textContent = `text-shadow: ${textShadowValue};`;
+            sampleDiv.style.transform = transformValue;
+            codeSnippet.textContent = `
+  transform: ${transformValue};
+`;
         }
 
-        function copyToClipboard() {
-            const codeSnippet = document.getElementById('generated-text-shadow-code').textContent;
-            const textarea = document.createElement('textarea');
-            textarea.value = codeSnippet;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-        }
-
-        document.getElementById('horizontal-offset-preview').addEventListener('input', generateTextShadow);
-        document.getElementById('vertical-offset-preview').addEventListener('input', generateTextShadow);
-        document.getElementById('blur-radius-preview').addEventListener('input', generateTextShadow);
-        document.getElementById('shadow-color-preview').addEventListener('input', generateTextShadow);
+        document.getElementById('translate-x-preview').addEventListener('input', generateTransform);
+        document.getElementById('translate-y-preview').addEventListener('input', generateTransform);
+        document.getElementById('rotate-preview').addEventListener('input', generateTransform);
+        document.getElementById('scale-preview').addEventListener('input', generateTransform);
 
         document.getElementById('copyButton').addEventListener('click', copyToClipboard);
 
-        generateTextShadow();
+        generateTransform();
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
@@ -189,6 +183,16 @@
         mobileMenuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+
+        function copyToClipboard() {
+            const codeSnippet = document.getElementById('generated-transform-code').textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeSnippet;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
     </script>
 
 </body>
